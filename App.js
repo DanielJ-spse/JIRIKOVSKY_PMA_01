@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+  FlatList,
+  r,
+} from "react-native";
+import Item from "./src/components/item";
 
 export default function App() {
   const [item, setItem] = useState("");
@@ -23,11 +33,13 @@ export default function App() {
         <Button onPress={handleAddItem} title="ADD" />
       </View>
 
-      <View style={styles.udalosti}>
-        {tasks.map((i) => {
-          <Text>{i}</Text>;
-        })}
-      </View>
+      <ScrollView style={styles.udalosti}>
+        <FlatList
+          data={tasks}
+          renderItem={({ item }) => <Item title={item} />}
+          keyExtractor={(item) => item.id}
+        />
+      </ScrollView>
     </View>
   );
 }
@@ -50,10 +62,5 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 4,
     borderColor: "#3f1fdc",
-  },
-
-  udalosti: {
-    flex: 3,
-    backgroundColor: "#eca2a2",
   },
 });
